@@ -9,8 +9,11 @@
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
   <div class="w-full max-w-lg bg-white shadow-2xl rounded-3xl p-8">
     <h1 class="text-3xl font-extrabold mb-6 text-center text-indigo-700">AI Image Generator</h1>
-    <p class="text-center text-gray-600 mb-6">Click the button below to generate a stunning AI image of Lord Krishna with our signature background text.</p>
-    <button id="generateBtn" class="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-3 rounded-2xl font-bold hover:scale-105 transition-transform duration-200">Generate Image</button>
+
+    <label class="block text-gray-700 mb-2 font-semibold">Enter Prompt</label>
+    <textarea id="prompt" rows="3" class="w-full border p-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Type your prompt here..."></textarea>
+
+    <button id="generateBtn" class="w-full mt-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-3 rounded-2xl font-bold hover:scale-105 transition-transform duration-200">Generate Image</button>
 
     <p id="error" class="text-red-500 text-sm mt-4 text-center hidden"></p>
 
@@ -22,18 +25,20 @@
 
   <script>
     const btn = document.getElementById('generateBtn');
+    const promptInput = document.getElementById('prompt');
     const errorText = document.getElementById('error');
     const resultDiv = document.getElementById('result');
     const imageEl = document.getElementById('image');
     const imageLink = document.getElementById('imageLink');
 
     btn.addEventListener('click', async () => {
+      const prompt = promptInput.value.trim();
+      if (!prompt) return;
+
       btn.disabled = true;
       btn.textContent = 'Generating...';
       errorText.classList.add('hidden');
       resultDiv.classList.add('hidden');
-
-      const prompt = 'lord krishna. add background text "YSHZAP"';
 
       try {
         const res = await fetch(`https://vaishnav-11.vercel.app/api/generate?prompt=${encodeURIComponent(prompt)}`);
