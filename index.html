@@ -1,1 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Image Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-6">
+  <div class="w-full max-w-xl bg-white shadow-lg rounded-2xl p-6">
+    <h1 class="text-2xl font-bold mb-4 text-center">AI Image Generator 🧠🎨</h1>
+    <textarea id="prompt" rows="3" class="w-full border p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter your image prompt...">lord krishna. add background text "YSHZAP"</textarea>
+    <button id="generateBtn" class="w-full mt-4 bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 disabled:opacity-60">Generate Image</button>
+    <p id="error" class="text-red-500 text-sm mt-3 text-center hidden"></p>
+    <div id="result" class="mt-6 flex flex-col items-center hidden">
+      <img id="image" src="" alt="Generated" class="rounded-lg shadow-md w-full" />
+      <a id="imageLink" href="#" target="_blank" class="mt-3 text-indigo-600 hover:underline">Open Full Image</a>
+    </div>
+  </div>
 
+  <script>
+    const btn = document.getElementById('generateBtn');
+    const promptInput = document.getElementById('prompt');
+    const errorText = document.getElementById('error');
+    const resultDiv = document.getElementById('result');
+    const imageEl = document.getElementById('image');
+    const imageLink = document.getElementById('imageLink');
+
+    btn.addEventListener('click', async () => {
+      const prompt = promptInput.value.trim();
+      if (!prompt) return;
+
+      btn.disabled = true;
+      btn.textContent = 'Generating...';
+      errorText.classList.add('hidden');
+      resultDiv.classList.add('hidden');
+
+      try {
+        const res = await fetch(`https://vaishnav-11.vercel.app/api/generate?prompt=${encodeURIComponent(prompt)}`);
+        const data = await res.json();
+
+        if (data.ok && data.result?.url) {
+          imageEl.src = data.result.url;
+          imageLink.href = data.result.url;
+          resultDiv.classList.remove('hidden');
+        } else {
+          errorText.textContent = 'Image generation failed.';
+          errorText.classList.remove('hidden');
+        }
+      } catch (err) {
+        errorText.textContent = 'Error: ' + err.message;
+        errorText.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Generate Image';
+      }
+    });
+  </script>
+</body>
+</html>
