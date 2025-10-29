@@ -4,8 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YSHZAP TOOL</title>
+
+  <!-- Import Poppins font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+
   <style>
-    /* Reset default margins */
     * {
       margin: 0;
       padding: 0;
@@ -16,43 +19,46 @@
       background-color: #000;
       color: #fff;
       font-family: 'Poppins', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
     }
 
     header {
-      font-size: 3rem;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      background: linear-gradient(90deg, #00ffff, #ff00ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: glow 2s ease-in-out infinite alternate;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #111;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      border-bottom: 1px solid #222;
+      z-index: 1000;
     }
 
-    @keyframes glow {
-      from {
-        text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
-      }
-      to {
-        text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff;
-      }
+    main {
+      padding-top: 100px; /* space below header */
+      text-align: center;
+      font-size: 1.2rem;
+      color: #ccc;
     }
 
     footer {
-      position: absolute;
-      bottom: 20px;
+      text-align: center;
+      padding: 20px;
+      color: #666;
       font-size: 0.9rem;
-      opacity: 0.6;
     }
   </style>
 </head>
 <body>
   <header>YSHZAP TOOL</header>
+
+  <main>
+    <p>Welcome to YSHZAP Tool — your workspace starts here.</p>
+  </main>
+
   <footer>© 2025 YSHZAP. All rights reserved.</footer>
 </body>
 </html>
