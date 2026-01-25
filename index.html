@@ -1,87 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YSHZAP TOOL</title>
-
-  <!-- Import Poppins font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: 'Poppins', sans-serif;
-      min-height: 100vh;
-    }
-
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: #111;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 30px;
-      border-bottom: 1px solid #222;
-      z-index: 1000;
-    }
-
-    .logo {
-      font-size: 1.8rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-    }
-
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin-left: 25px;
-      font-size: 1rem;
-      transition: color 0.3s ease;
-    }
-
-    nav a:hover {
-      color: #00ffff;
-    }
-
-    main {
-      padding-top: 120px; /* space below header */
-      text-align: center;
-      font-size: 1.2rem;
-      color: #ccc;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #666;
-      font-size: 0.9rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>API List</title>
+    <style>
+        body { font-family: system-ui; padding: 2rem; line-height: 1.5; }
+        .card { border: 1px solid #eaeaea; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
+        code { background: #f4f4f4; padding: 2px 4px; }
+    </style>
 </head>
 <body>
-  <header>
-    <div class="logo">YSHZAP TOOL</div>
-    <nav>
-      <a href="tools.html">TOOLS</a>
-      <a href="post.html">POST'S</a>
-    </nav>
-  </header>
+    <h1>My REST API List</h1>
+    
+    <div class="card">
+        <h3>Users API</h3>
+        <p>Returns a list of all registered users.</p>
+        <a href="/api/users"><code>/api/users</code></a>
+    </div>
 
-  <main>
-    <p>Welcome to YSHZAP Tool — choose an option from above.</p>
-  </main>
-
-  <footer>© 2025 YSHZAP. All rights reserved.</footer>
+    <div class="card">
+        <h3>Products API</h3>
+        <p>Returns catalog items.</p>
+        <a href="/api/products"><code>/api/products</code></a>
+    </div>
 </body>
 </html>
