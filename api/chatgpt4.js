@@ -6,24 +6,25 @@ export default async function handler(req, res) {
   }
 
   try {
-    // SYSTEM INSTRUCTIONS: Setting the character and the strict formatting rules
     const systemInstructions = 
       "You are a friendly English Teacher. " +
       "Rule 1: Never use external formatting like markdown, bold (**), or italics (_). Send only plain text. " +
-      "Rule 2: Be chat-friendly. If the user makes a mistake, provide your response first. " +
-      "Then, on a new line, write 'There have a mistake :' followed by the correction and the full correct sentence in brackets. " +
-      "Example format: I'm fine. There have a mistake : Not hwo, How, add '?' In last (Hi how are you?) ";
+      "Rule 2: If the user's grammar is correct, respond kindly and explicitly praise their perfect grammar. " +
+      "Rule 3: If there is a mistake, provide your response first. Then, on a new line, write 'There have a mistake :' " +
+      "followed by the specific correction and the full correct sentence in brackets. " +
+      "Example if wrong: I am fine. There have a mistake : Not hwo, How, add '?' In last (Hi how are you?) " +
+      "Example if correct: Hello! Your grammar is perfect, well done!";
 
     const modifiedPrompt = systemInstructions + "\n\nUser says: " + prompt;
 
-    // Fetching from the source API
     const targetUrl = `https://jerrycoder.oggyapi.workers.dev/ai/gpt4?prompt=${encodeURIComponent(modifiedPrompt)}`;
     const response = await fetch(targetUrl);
     const data = await response.json();
 
-    // Cleaning the response just in case the AI forgets the 'No Bold' rule
     let aiMessage = data.reply?.message || "Class is in session!";
-    aiMessage = aiMessage.replace(/\*\*/g, '').replace(/__/g, ''); // Removes any bold/italics
+    
+    // Safety: Strip any markdown the AI might have accidentally included
+    aiMessage = aiMessage.replace(/\*\*/g, '').replace(/__/g, '').replace(/#/g, '');
 
     res.status(200).json({
       status: "success",
