@@ -1,4 +1,3 @@
-// api/gpt4.js
 export default async function handler(req, res) {
   const { prompt } = req.query;
 
@@ -7,37 +6,33 @@ export default async function handler(req, res) {
   }
 
   try {
-    // You would typically call OpenAI or another provider here
-    // For this example, we'll use a fetch to an AI endpoint
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "gpt-4",
-        messages: [
-          { role: "system", content: "You are an expert English Teacher. Correct grammar and suggest advanced words." },
-          { role: "user", content: prompt }
-        ],
-      }),
-    });
+    // 1. THE TRICK: We wrap the user's prompt in English Teacher instructions
+    const teacherInstruction = "Act as an English Teacher. Correct the grammar and explain the mistakes in this text: ";
+    const modifiedPrompt = teacherInstruction + prompt;
 
+    // 2. We call the original API with our 'modified' prompt
+    const targetUrl = `https://jerrycoder.oggyapi.workers.dev/ai/gpt4?prompt=${encodeURIComponent(modifiedPrompt)}`;
+    
+    const response = await fetch(targetUrl);
     const data = await response.json();
-    const aiText = data.choices[0].message.content;
 
-    // Matching your requested output format
+    // 3. Extract the message from their response
+    const aiMessage = data.reply?.message || "Teacher is thinking...";
+
+    // 4. Return it in YOUR custom format
     res.status(200).json({
       status: "success",
       creator: "YourName",
       telegram: "Your_Handle",
       character: "English Teacher",
       reply: {
-        message: aiText
+        message: aiMessage
       }
     });
   } catch (error) {
-    res.status(500).json({ status: "error", message: "API Error" });
+    res.status(500).json({ 
+      status: "error", 
+      message: "The classroom is closed right now." 
+    });
   }
 }
